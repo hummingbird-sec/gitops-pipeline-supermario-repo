@@ -26,6 +26,14 @@ jobs:
       - name: Debug VERSION
         run: echo "VERSION = $VERSION"
 
+      - name: Pull and save image
+        run: |
+          echo "Using VERSION = ${{ env.VERSION }}"
+          docker pull docker.io/hummingbirddock/supermariogitopsproject:${{ env.VERSION }}
+          docker images
+          docker save -o /github/workspace/supermariolatestdockerimage.tar docker.io/hummingbirddock/supermariogitopsproject:${{ env.VERSION }}
+          ls -l /github/workspace/supermariolatestdockerimage.tar
+
       - name: Get Docker Image from Docker Hub
         run: |
           docker pull docker.io/hummingbirddock/supermariogitopsproject:${{ env.VERSION }}
